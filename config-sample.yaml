@@ -1,0 +1,19 @@
+# 1. Rename `config-sample.yaml` to `config.yaml`
+# 2. Run `go run cmd/link-checker.go PROFILE`
+#
+#   e.g. `go run cmd/link-checker.go life`
+#
+profiles:
+
+  # Profile
+  faraon:
+    # Verbose title for the report
+    title: Faraon website
+    # Site to check
+    home_page: https://fara-on.com/
+    # Duration to wait between requests
+    delay: 100ms
+
+  life:
+    title: WCS! Life website
+    home_page: https://wcs.life/

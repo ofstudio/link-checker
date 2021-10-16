@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        {{template "report.css"}}
+    </style>
+    <link rel="stylesheet" href="./report.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Subject}} - site-checker</title>
+</head>
+
+<body>
+<main>
+    <h1>{{.Subject}}</h1>
+    <p><a target="_blank" href="{{.Href}}">{{.Href}}</a></p>
+    <p><small>{{.CreatedAt.Format "02 Jan 2006 15:04:05 UTC"}}</small></p>
+
+    <table>
+        <thead>
+        <tr>
+            {{range .Summary.Keys}}
+                <th class="{{.Status}}">{{.Value}}</th>
+            {{end}}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {{range .Summary.Vals}}
+                <td>{{.}}</td>
+            {{end}}
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Errors ({{len .Errors}})</h2>
+    {{range .Errors}}
+        {{template "list" . }}
+    {{end}}
+    <hr>
+    <h2>External Links ({{len .Externals}})</h2>
+    {{range .Externals}}
+        {{template "list" . }}
+    {{end}}
+</main>
+<footer>
+    <hr>
+    <p>
+        <small><a target="_blank" href="https://github.com/ofstudio/link-checker">link-checker</a></small>
+    </p>
+</footer>
+</body>
+</html>
+
+{{define "list"}}
+    <details>
+        <summary><small class="{{.Status}}">{{.Code}}</small> {{.Title}}</summary>
+        <p class="err-url"><a target="_blank" href="{{.Href}}">{{.Href}}</a></p>
+        <p>Referring pages ({{len .Refs }})</p>
+        <ol>
+            {{range .Refs}}
+                <li>
+                    <a target="_blank" href="{{.}}">{{.}}</a>
+                </li>
+            {{end}}
+        </ol>
+    </details>
+{{end}}
